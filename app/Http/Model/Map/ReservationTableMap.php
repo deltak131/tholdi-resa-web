@@ -63,7 +63,7 @@ class ReservationTableMap extends TableMap
     /**
      * The total number of columns
      */
-    public const NUM_COLUMNS = 12;
+    public const NUM_COLUMNS = 13;
 
     /**
      * The number of lazy-loaded columns
@@ -73,7 +73,7 @@ class ReservationTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    public const NUM_HYDRATE_COLUMNS = 12;
+    public const NUM_HYDRATE_COLUMNS = 13;
 
     /**
      * the column name for the codeReservation field
@@ -136,6 +136,11 @@ class ReservationTableMap extends TableMap
     public const COL_TRANSIT = 'reservation.transit';
 
     /**
+     * the column name for the referenceReservation field
+     */
+    public const COL_REFERENCERESERVATION = 'reservation.referenceReservation';
+
+    /**
      * The default string format for model objects of the related table
      */
     public const DEFAULT_STRING_FORMAT = 'YAML';
@@ -149,11 +154,11 @@ class ReservationTableMap extends TableMap
      * @var array<string, mixed>
      */
     protected static $fieldNames = [
-        self::TYPE_PHPNAME       => ['Codereservation', 'Datedebutreservation', 'Datefinreservation', 'Datereservation', 'Volumeestime', 'Codedevis', 'Codevillemisedispo', 'Codevillerendre', 'Codeutilisateur', 'Etat', 'Commentaire', 'Transit', ],
-        self::TYPE_CAMELNAME     => ['codereservation', 'datedebutreservation', 'datefinreservation', 'datereservation', 'volumeestime', 'codedevis', 'codevillemisedispo', 'codevillerendre', 'codeutilisateur', 'etat', 'commentaire', 'transit', ],
-        self::TYPE_COLNAME       => [ReservationTableMap::COL_CODERESERVATION, ReservationTableMap::COL_DATEDEBUTRESERVATION, ReservationTableMap::COL_DATEFINRESERVATION, ReservationTableMap::COL_DATERESERVATION, ReservationTableMap::COL_VOLUMEESTIME, ReservationTableMap::COL_CODEDEVIS, ReservationTableMap::COL_CODEVILLEMISEDISPO, ReservationTableMap::COL_CODEVILLERENDRE, ReservationTableMap::COL_CODEUTILISATEUR, ReservationTableMap::COL_ETAT, ReservationTableMap::COL_COMMENTAIRE, ReservationTableMap::COL_TRANSIT, ],
-        self::TYPE_FIELDNAME     => ['codeReservation', 'dateDebutReservation', 'dateFinReservation', 'dateReservation', 'volumeEstime', 'codeDevis', 'codeVilleMiseDispo', 'codeVilleRendre', 'codeUtilisateur', 'etat', 'commentaire', 'transit', ],
-        self::TYPE_NUM           => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ]
+        self::TYPE_PHPNAME       => ['Codereservation', 'Datedebutreservation', 'Datefinreservation', 'Datereservation', 'Volumeestime', 'Codedevis', 'Codevillemisedispo', 'Codevillerendre', 'Codeutilisateur', 'Etat', 'Commentaire', 'Transit', 'Referencereservation', ],
+        self::TYPE_CAMELNAME     => ['codereservation', 'datedebutreservation', 'datefinreservation', 'datereservation', 'volumeestime', 'codedevis', 'codevillemisedispo', 'codevillerendre', 'codeutilisateur', 'etat', 'commentaire', 'transit', 'referencereservation', ],
+        self::TYPE_COLNAME       => [ReservationTableMap::COL_CODERESERVATION, ReservationTableMap::COL_DATEDEBUTRESERVATION, ReservationTableMap::COL_DATEFINRESERVATION, ReservationTableMap::COL_DATERESERVATION, ReservationTableMap::COL_VOLUMEESTIME, ReservationTableMap::COL_CODEDEVIS, ReservationTableMap::COL_CODEVILLEMISEDISPO, ReservationTableMap::COL_CODEVILLERENDRE, ReservationTableMap::COL_CODEUTILISATEUR, ReservationTableMap::COL_ETAT, ReservationTableMap::COL_COMMENTAIRE, ReservationTableMap::COL_TRANSIT, ReservationTableMap::COL_REFERENCERESERVATION, ],
+        self::TYPE_FIELDNAME     => ['codeReservation', 'dateDebutReservation', 'dateFinReservation', 'dateReservation', 'volumeEstime', 'codeDevis', 'codeVilleMiseDispo', 'codeVilleRendre', 'codeUtilisateur', 'etat', 'commentaire', 'transit', 'referenceReservation', ],
+        self::TYPE_NUM           => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, ]
     ];
 
     /**
@@ -165,11 +170,11 @@ class ReservationTableMap extends TableMap
      * @var array<string, mixed>
      */
     protected static $fieldKeys = [
-        self::TYPE_PHPNAME       => ['Codereservation' => 0, 'Datedebutreservation' => 1, 'Datefinreservation' => 2, 'Datereservation' => 3, 'Volumeestime' => 4, 'Codedevis' => 5, 'Codevillemisedispo' => 6, 'Codevillerendre' => 7, 'Codeutilisateur' => 8, 'Etat' => 9, 'Commentaire' => 10, 'Transit' => 11, ],
-        self::TYPE_CAMELNAME     => ['codereservation' => 0, 'datedebutreservation' => 1, 'datefinreservation' => 2, 'datereservation' => 3, 'volumeestime' => 4, 'codedevis' => 5, 'codevillemisedispo' => 6, 'codevillerendre' => 7, 'codeutilisateur' => 8, 'etat' => 9, 'commentaire' => 10, 'transit' => 11, ],
-        self::TYPE_COLNAME       => [ReservationTableMap::COL_CODERESERVATION => 0, ReservationTableMap::COL_DATEDEBUTRESERVATION => 1, ReservationTableMap::COL_DATEFINRESERVATION => 2, ReservationTableMap::COL_DATERESERVATION => 3, ReservationTableMap::COL_VOLUMEESTIME => 4, ReservationTableMap::COL_CODEDEVIS => 5, ReservationTableMap::COL_CODEVILLEMISEDISPO => 6, ReservationTableMap::COL_CODEVILLERENDRE => 7, ReservationTableMap::COL_CODEUTILISATEUR => 8, ReservationTableMap::COL_ETAT => 9, ReservationTableMap::COL_COMMENTAIRE => 10, ReservationTableMap::COL_TRANSIT => 11, ],
-        self::TYPE_FIELDNAME     => ['codeReservation' => 0, 'dateDebutReservation' => 1, 'dateFinReservation' => 2, 'dateReservation' => 3, 'volumeEstime' => 4, 'codeDevis' => 5, 'codeVilleMiseDispo' => 6, 'codeVilleRendre' => 7, 'codeUtilisateur' => 8, 'etat' => 9, 'commentaire' => 10, 'transit' => 11, ],
-        self::TYPE_NUM           => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ]
+        self::TYPE_PHPNAME       => ['Codereservation' => 0, 'Datedebutreservation' => 1, 'Datefinreservation' => 2, 'Datereservation' => 3, 'Volumeestime' => 4, 'Codedevis' => 5, 'Codevillemisedispo' => 6, 'Codevillerendre' => 7, 'Codeutilisateur' => 8, 'Etat' => 9, 'Commentaire' => 10, 'Transit' => 11, 'Referencereservation' => 12, ],
+        self::TYPE_CAMELNAME     => ['codereservation' => 0, 'datedebutreservation' => 1, 'datefinreservation' => 2, 'datereservation' => 3, 'volumeestime' => 4, 'codedevis' => 5, 'codevillemisedispo' => 6, 'codevillerendre' => 7, 'codeutilisateur' => 8, 'etat' => 9, 'commentaire' => 10, 'transit' => 11, 'referencereservation' => 12, ],
+        self::TYPE_COLNAME       => [ReservationTableMap::COL_CODERESERVATION => 0, ReservationTableMap::COL_DATEDEBUTRESERVATION => 1, ReservationTableMap::COL_DATEFINRESERVATION => 2, ReservationTableMap::COL_DATERESERVATION => 3, ReservationTableMap::COL_VOLUMEESTIME => 4, ReservationTableMap::COL_CODEDEVIS => 5, ReservationTableMap::COL_CODEVILLEMISEDISPO => 6, ReservationTableMap::COL_CODEVILLERENDRE => 7, ReservationTableMap::COL_CODEUTILISATEUR => 8, ReservationTableMap::COL_ETAT => 9, ReservationTableMap::COL_COMMENTAIRE => 10, ReservationTableMap::COL_TRANSIT => 11, ReservationTableMap::COL_REFERENCERESERVATION => 12, ],
+        self::TYPE_FIELDNAME     => ['codeReservation' => 0, 'dateDebutReservation' => 1, 'dateFinReservation' => 2, 'dateReservation' => 3, 'volumeEstime' => 4, 'codeDevis' => 5, 'codeVilleMiseDispo' => 6, 'codeVilleRendre' => 7, 'codeUtilisateur' => 8, 'etat' => 9, 'commentaire' => 10, 'transit' => 11, 'referenceReservation' => 12, ],
+        self::TYPE_NUM           => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, ]
     ];
 
     /**
@@ -268,6 +273,14 @@ class ReservationTableMap extends TableMap
         'reservation.transit' => 'TRANSIT',
         'ReservationTableMap::COL_TRANSIT' => 'TRANSIT',
         'COL_TRANSIT' => 'TRANSIT',
+        'Referencereservation' => 'REFERENCERESERVATION',
+        'Reservation.Referencereservation' => 'REFERENCERESERVATION',
+        'referencereservation' => 'REFERENCERESERVATION',
+        'reservation.referencereservation' => 'REFERENCERESERVATION',
+        'ReservationTableMap::COL_REFERENCERESERVATION' => 'REFERENCERESERVATION',
+        'COL_REFERENCERESERVATION' => 'REFERENCERESERVATION',
+        'referenceReservation' => 'REFERENCERESERVATION',
+        'reservation.referenceReservation' => 'REFERENCERESERVATION',
     ];
 
     /**
@@ -299,6 +312,7 @@ class ReservationTableMap extends TableMap
         $this->addColumn('etat', 'Etat', 'CHAR', true, null, 'Demande de réservation');
         $this->addColumn('commentaire', 'Commentaire', 'VARCHAR', false, 200, null);
         $this->addColumn('transit', 'Transit', 'CHAR', false, null, null);
+        $this->addColumn('referenceReservation', 'Referencereservation', 'VARCHAR', false, 10, null);
     }
 
     /**
@@ -506,6 +520,7 @@ class ReservationTableMap extends TableMap
             $criteria->addSelectColumn(ReservationTableMap::COL_ETAT);
             $criteria->addSelectColumn(ReservationTableMap::COL_COMMENTAIRE);
             $criteria->addSelectColumn(ReservationTableMap::COL_TRANSIT);
+            $criteria->addSelectColumn(ReservationTableMap::COL_REFERENCERESERVATION);
         } else {
             $criteria->addSelectColumn($alias . '.codeReservation');
             $criteria->addSelectColumn($alias . '.dateDebutReservation');
@@ -519,6 +534,7 @@ class ReservationTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.etat');
             $criteria->addSelectColumn($alias . '.commentaire');
             $criteria->addSelectColumn($alias . '.transit');
+            $criteria->addSelectColumn($alias . '.referenceReservation');
         }
     }
 
@@ -549,6 +565,7 @@ class ReservationTableMap extends TableMap
             $criteria->removeSelectColumn(ReservationTableMap::COL_ETAT);
             $criteria->removeSelectColumn(ReservationTableMap::COL_COMMENTAIRE);
             $criteria->removeSelectColumn(ReservationTableMap::COL_TRANSIT);
+            $criteria->removeSelectColumn(ReservationTableMap::COL_REFERENCERESERVATION);
         } else {
             $criteria->removeSelectColumn($alias . '.codeReservation');
             $criteria->removeSelectColumn($alias . '.dateDebutReservation');
@@ -562,6 +579,7 @@ class ReservationTableMap extends TableMap
             $criteria->removeSelectColumn($alias . '.etat');
             $criteria->removeSelectColumn($alias . '.commentaire');
             $criteria->removeSelectColumn($alias . '.transit');
+            $criteria->removeSelectColumn($alias . '.referenceReservation');
         }
     }
 

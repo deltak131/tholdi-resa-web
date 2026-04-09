@@ -15,10 +15,16 @@
         <div class="card ">  
             <div class="card-header bg-info">
                 <h4>
+                    REFERENCE RESERVATION : {{
+                    $reservationCourante->getReferencereservation()
+                    }}
+                </h4> 
+                <br>
+                <h5>
                     NUMERO DE RESERVATION : {{
                     $reservationCourante->getCodereservation()
                     }}
-                </h4> 
+                </h5>
                 <h6>
                     EFFECTUEE LE : {{ 
                     $reservationCourante->getDatereservation()->format('d/m/Y')
@@ -64,25 +70,45 @@
                         
                     }}
                     
+                    <br>
+                
+                    
                 </p>
                 <table class="table table-sm table-striped">  
-                    <thead class="thead-dark ">
-
+                    <thead class="thead-dark">
                         <tr>
                             <th>Type de container</th>
                             <th>Quantité</th>
-
                         </tr> 
+                    </thead>
+
+                    <tbody>
+                        @php $quantiteTotalReserver = 0; @endphp
 
                         @foreach ($reservationCourante->getReservers() as $reserver)
-                        {{-- dd($ligneDeReservation) --}}
                         <tr>
                             <td>{{ $reserver->getTypecontainer()->getLibelletypecontainer() }}</td>
                             <td>{{ $reserver->getQtereserver() }}</td>
-
                         </tr>  
+
+                        @php
+                            $quantiteTotalReserver += $reserver->getQtereserver();
+                        @endphp
+
                         @endforeach
+                    </tbody>
                 </table>
+
+                <form action="{{ route('r-creeDevis') }}" method="post">
+                    @csrf 
+
+                    <input type="hidden" name="codeReservation" value="{{ $reservationCourante->getCodereservation() }}" />
+                    <input type="hidden" name="qteReserver" value="{{ $quantiteTotalReserver }}" />
+
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-primary btn-lg">Générer le devis global</button>
+                    </div>
+                </form>
             </div>
         </div>
         <br>

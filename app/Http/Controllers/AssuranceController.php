@@ -50,10 +50,11 @@ class AssuranceController extends Controller
 
         $souscriptionAssurance->save();
         
-        $view = view('assurance.consultationSouscription',
-                ['souscriptionAssurance' => $souscriptionAssurance],
+//        $view = view('assurance.consultationSouscription',
+//                ['souscriptionAssurance' => $souscriptionAssurance],
+        return redirect()->action([AssuranceController::class, 'consultationSouscription']
+                
         );
-        return $view;
     }    
     
     public function consultationSouscription(Request $request) {

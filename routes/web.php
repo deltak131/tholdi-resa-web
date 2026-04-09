@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthentificationController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TableauDeBordController;
 use App\Http\Controllers\AssuranceController;
+use App\Http\Controllers\DevisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,13 @@ Route::group(['prefix' => 'assurance'], function () {
     Route::get('consultationSouscription', [AssuranceController::class, 'consultationSouscription'])
             ->name('r-consultationSouscription');  
     
+
+Route::group(['prefix' => 'devis'], function () {
+    Route::post('creeDevis', [DevisController::class, 'creeDevis'])
+            ->name('r-creeDevis');
+    Route::get('consulterDevis', [DevisController::class, 'consulterDevis'])
+            ->name('r-consulterDevis');
+});
 /*route pour accéder au formulaire de saisie du code à usage unique*/
 Route::get('/verificationTfa', function(){
     return view('tfa.verificationTfa');

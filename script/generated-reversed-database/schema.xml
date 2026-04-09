@@ -38,6 +38,7 @@
     <column name="etat" phpName="Etat" type="CHAR" sqlType="enum('Demande de réservation','Demande de réservation validée','Réservation en cours','Réservation terminée','Archivé','Annulé')" required="true" defaultValue="Demande de réservation"/>
     <column name="commentaire" phpName="Commentaire" type="VARCHAR" size="200"/>
     <column name="transit" phpName="Transit" type="CHAR" sqlType="enum('ferroviaire','routier','maritime')"/>
+    <column name="referenceReservation" phpName="Referencereservation" type="VARCHAR" size="10"/>
     <foreign-key foreignTable="utilisateur" name="fk_pers">
       <reference local="codeUtilisateur" foreign="codeUtilisateur"/>
     </foreign-key>

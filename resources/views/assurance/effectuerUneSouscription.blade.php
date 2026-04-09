@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-    <div class="row">S
+    <div class="row">
             <div class="col-5 offset-4 text-center">
                 <button type="submit" id="ajouterSouscription" class="btn btn-primary btn-lg">Valider</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div>

@@ -39,7 +39,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Devis</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Consulter vos devis</a></li>
+                                <li><a class="dropdown-item" href="{{route('r-consulterDevis')}}">Consulter vos devis</a></li>
                                 <li><a class="dropdown-item" href="#">Rechercher un devis</a></li>
                             </ul>
                         </li>

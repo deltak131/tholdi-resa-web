@@ -163,6 +163,13 @@ abstract class Reservation implements ActiveRecordInterface
     protected $transit;
 
     /**
+     * The value for the referencereservation field.
+     *
+     * @var        string|null
+     */
+    protected $referencereservation;
+
+    /**
      * @var        ChildUtilisateur
      */
     protected $aUtilisateur;
@@ -614,6 +621,16 @@ abstract class Reservation implements ActiveRecordInterface
     }
 
     /**
+     * Get the [referencereservation] column value.
+     *
+     * @return string|null
+     */
+    public function getReferencereservation()
+    {
+        return $this->referencereservation;
+    }
+
+    /**
      * Set the value of [codereservation] column.
      *
      * @param int $v New value
@@ -870,6 +887,26 @@ abstract class Reservation implements ActiveRecordInterface
     }
 
     /**
+     * Set the value of [referencereservation] column.
+     *
+     * @param string|null $v New value
+     * @return $this The current object (for fluent API support)
+     */
+    public function setReferencereservation($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->referencereservation !== $v) {
+            $this->referencereservation = $v;
+            $this->modifiedColumns[ReservationTableMap::COL_REFERENCERESERVATION] = true;
+        }
+
+        return $this;
+    }
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -954,6 +991,9 @@ abstract class Reservation implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : ReservationTableMap::translateFieldName('Transit', TableMap::TYPE_PHPNAME, $indexType)];
             $this->transit = (null !== $col) ? (string) $col : null;
 
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : ReservationTableMap::translateFieldName('Referencereservation', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->referencereservation = (null !== $col) ? (string) $col : null;
+
             $this->resetModified();
             $this->setNew(false);
 
@@ -961,7 +1001,7 @@ abstract class Reservation implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 12; // 12 = ReservationTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 13; // 13 = ReservationTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\App\\Http\\Model\\Reservation'), 0, $e);
@@ -1286,6 +1326,9 @@ abstract class Reservation implements ActiveRecordInterface
         if ($this->isColumnModified(ReservationTableMap::COL_TRANSIT)) {
             $modifiedColumns[':p' . $index++]  = 'transit';
         }
+        if ($this->isColumnModified(ReservationTableMap::COL_REFERENCERESERVATION)) {
+            $modifiedColumns[':p' . $index++]  = 'referenceReservation';
+        }
 
         $sql = sprintf(
             'INSERT INTO reservation (%s) VALUES (%s)',
@@ -1343,6 +1386,10 @@ abstract class Reservation implements ActiveRecordInterface
                         break;
                     case 'transit':
                         $stmt->bindValue($identifier, $this->transit, PDO::PARAM_STR);
+
+                        break;
+                    case 'referenceReservation':
+                        $stmt->bindValue($identifier, $this->referencereservation, PDO::PARAM_STR);
 
                         break;
                 }
@@ -1443,6 +1490,9 @@ abstract class Reservation implements ActiveRecordInterface
             case 11:
                 return $this->getTransit();
 
+            case 12:
+                return $this->getReferencereservation();
+
             default:
                 return null;
         } // switch()
@@ -1483,6 +1533,7 @@ abstract class Reservation implements ActiveRecordInterface
             $keys[9] => $this->getEtat(),
             $keys[10] => $this->getCommentaire(),
             $keys[11] => $this->getTransit(),
+            $keys[12] => $this->getReferencereservation(),
         ];
         if ($result[$keys[1]] instanceof \DateTimeInterface) {
             $result[$keys[1]] = $result[$keys[1]]->format('Y-m-d');
@@ -1664,6 +1715,9 @@ abstract class Reservation implements ActiveRecordInterface
             case 11:
                 $this->setTransit($value);
                 break;
+            case 12:
+                $this->setReferencereservation($value);
+                break;
         } // switch()
 
         return $this;
@@ -1725,6 +1779,9 @@ abstract class Reservation implements ActiveRecordInterface
         }
         if (array_key_exists($keys[11], $arr)) {
             $this->setTransit($arr[$keys[11]]);
+        }
+        if (array_key_exists($keys[12], $arr)) {
+            $this->setReferencereservation($arr[$keys[12]]);
         }
 
         return $this;
@@ -1804,6 +1861,9 @@ abstract class Reservation implements ActiveRecordInterface
         }
         if ($this->isColumnModified(ReservationTableMap::COL_TRANSIT)) {
             $criteria->add(ReservationTableMap::COL_TRANSIT, $this->transit);
+        }
+        if ($this->isColumnModified(ReservationTableMap::COL_REFERENCERESERVATION)) {
+            $criteria->add(ReservationTableMap::COL_REFERENCERESERVATION, $this->referencereservation);
         }
 
         return $criteria;
@@ -1904,6 +1964,7 @@ abstract class Reservation implements ActiveRecordInterface
         $copyObj->setEtat($this->getEtat());
         $copyObj->setCommentaire($this->getCommentaire());
         $copyObj->setTransit($this->getTransit());
+        $copyObj->setReferencereservation($this->getReferencereservation());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -2743,6 +2804,7 @@ abstract class Reservation implements ActiveRecordInterface
         $this->etat = null;
         $this->commentaire = null;
         $this->transit = null;
+        $this->referencereservation = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->applyDefaultValues();

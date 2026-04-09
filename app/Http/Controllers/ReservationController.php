@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Http\Model\VilleQuery;
 use App\Http\Model\ReservationQuery;
 use App\Http\Model\Reservation;
@@ -19,6 +20,7 @@ class ReservationController extends Controller {
     }
 
     public function ajouterReservation(Request $request) {
+        
         $dateDebutReservation = $request->input('dateDebutReservation');
         $dateFinReservation = $request->input('dateFinReservation');
         $codeVilleMiseDisposition = $request->input('codeVilleMiseDisposition');
@@ -93,6 +95,17 @@ class ReservationController extends Controller {
         $reservation->save();
         $request->session()->forget("reservation");
         $request->session()->forget("collectionReserver");
+        
+        $compteUtilisateur = $request->session()->get('utilisateur');
+        
+        $codeReservationPourReference = $reservation->getCodereservation();
+        $refRaisonSociale = $compteUtilisateur->getRaisonsociale();
+        $raisonSocialeTroisChar = Str::substr($refRaisonSociale,0,3);
+        $refResa = $raisonSocialeTroisChar.'-'.$codeReservationPourReference;
+        
+        $reservation->setReferencereservation($refResa);
+        $reservation->save();
+        
         return redirect()->action([ReservationController::class, 'consulterLesReservations']);
     }
 

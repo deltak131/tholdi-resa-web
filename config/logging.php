@@ -53,6 +53,12 @@ return [
             'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
+        
+        'EchangeClientServeur' => [ 
+            'driver' => 'single',
+            'path' => storage_path('logs/echangeClientServeur.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
 
         'single' => [
             'driver' => 'single',

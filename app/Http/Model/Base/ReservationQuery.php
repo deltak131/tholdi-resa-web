@@ -31,6 +31,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildReservationQuery orderByEtat($order = Criteria::ASC) Order by the etat column
  * @method     ChildReservationQuery orderByCommentaire($order = Criteria::ASC) Order by the commentaire column
  * @method     ChildReservationQuery orderByTransit($order = Criteria::ASC) Order by the transit column
+ * @method     ChildReservationQuery orderByReferencereservation($order = Criteria::ASC) Order by the referenceReservation column
  *
  * @method     ChildReservationQuery groupByCodereservation() Group by the codeReservation column
  * @method     ChildReservationQuery groupByDatedebutreservation() Group by the dateDebutReservation column
@@ -44,6 +45,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildReservationQuery groupByEtat() Group by the etat column
  * @method     ChildReservationQuery groupByCommentaire() Group by the commentaire column
  * @method     ChildReservationQuery groupByTransit() Group by the transit column
+ * @method     ChildReservationQuery groupByReferencereservation() Group by the referenceReservation column
  *
  * @method     ChildReservationQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildReservationQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -130,6 +132,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildReservation|null findOneByEtat(string $etat) Return the first ChildReservation filtered by the etat column
  * @method     ChildReservation|null findOneByCommentaire(string $commentaire) Return the first ChildReservation filtered by the commentaire column
  * @method     ChildReservation|null findOneByTransit(string $transit) Return the first ChildReservation filtered by the transit column
+ * @method     ChildReservation|null findOneByReferencereservation(string $referenceReservation) Return the first ChildReservation filtered by the referenceReservation column
  *
  * @method     ChildReservation requirePk($key, ?ConnectionInterface $con = null) Return the ChildReservation by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildReservation requireOne(?ConnectionInterface $con = null) Return the first ChildReservation matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -146,6 +149,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildReservation requireOneByEtat(string $etat) Return the first ChildReservation filtered by the etat column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildReservation requireOneByCommentaire(string $commentaire) Return the first ChildReservation filtered by the commentaire column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildReservation requireOneByTransit(string $transit) Return the first ChildReservation filtered by the transit column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildReservation requireOneByReferencereservation(string $referenceReservation) Return the first ChildReservation filtered by the referenceReservation column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildReservation[]|Collection find(?ConnectionInterface $con = null) Return ChildReservation objects based on current ModelCriteria
  * @psalm-method Collection&\Traversable<ChildReservation> find(?ConnectionInterface $con = null) Return ChildReservation objects based on current ModelCriteria
@@ -174,6 +178,8 @@ use Propel\Runtime\Exception\PropelException;
  * @psalm-method Collection&\Traversable<ChildReservation> findByCommentaire(string|array<string> $commentaire) Return ChildReservation objects filtered by the commentaire column
  * @method     ChildReservation[]|Collection findByTransit(string|array<string> $transit) Return ChildReservation objects filtered by the transit column
  * @psalm-method Collection&\Traversable<ChildReservation> findByTransit(string|array<string> $transit) Return ChildReservation objects filtered by the transit column
+ * @method     ChildReservation[]|Collection findByReferencereservation(string|array<string> $referenceReservation) Return ChildReservation objects filtered by the referenceReservation column
+ * @psalm-method Collection&\Traversable<ChildReservation> findByReferencereservation(string|array<string> $referenceReservation) Return ChildReservation objects filtered by the referenceReservation column
  *
  * @method     ChildReservation[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildReservation> paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -273,7 +279,7 @@ abstract class ReservationQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT codeReservation, dateDebutReservation, dateFinReservation, dateReservation, volumeEstime, codeDevis, codeVilleMiseDispo, codeVilleRendre, codeUtilisateur, etat, commentaire, transit FROM reservation WHERE codeReservation = :p0';
+        $sql = 'SELECT codeReservation, dateDebutReservation, dateFinReservation, dateReservation, volumeEstime, codeDevis, codeVilleMiseDispo, codeVilleRendre, codeUtilisateur, etat, commentaire, transit, referenceReservation FROM reservation WHERE codeReservation = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -814,6 +820,34 @@ abstract class ReservationQuery extends ModelCriteria
         }
 
         $this->addUsingAlias(ReservationTableMap::COL_TRANSIT, $transit, $comparison);
+
+        return $this;
+    }
+
+    /**
+     * Filter the query on the referenceReservation column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByReferencereservation('fooValue');   // WHERE referenceReservation = 'fooValue'
+     * $query->filterByReferencereservation('%fooValue%', Criteria::LIKE); // WHERE referenceReservation LIKE '%fooValue%'
+     * $query->filterByReferencereservation(['foo', 'bar']); // WHERE referenceReservation IN ('foo', 'bar')
+     * </code>
+     *
+     * @param string|string[] $referencereservation The value to use as filter.
+     * @param string|null $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this The current query, for fluid interface
+     */
+    public function filterByReferencereservation($referencereservation = null, ?string $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($referencereservation)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        $this->addUsingAlias(ReservationTableMap::COL_REFERENCERESERVATION, $referencereservation, $comparison);
 
         return $this;
     }
